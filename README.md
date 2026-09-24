@@ -20,7 +20,7 @@
 
 ## 🌐 Live Demo
 
-> 🚀 **Live Application:** [Click here to launch DocuMind AI](https://your-deployed-app-link.streamlit.app)
+> 🚀 **Live Application:** [Click here to launch DocuMind AI](https://documind-ai-abhay.streamlit.app/)
 > 
 
 ---
