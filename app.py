@@ -8,7 +8,16 @@ import re
 import streamlit as st
 from dotenv import load_dotenv
 
+# 1. Load local .env first
 load_dotenv()
+
+# 2. Fallback to st.secrets for Streamlit Cloud deployment
+if "GOOGLE_API_KEY" in st.secrets:
+    os.environ["GOOGLE_API_KEY"] = st.secrets["GOOGLE_API_KEY"]
+if "GROQ_API_KEY" in st.secrets:
+    os.environ["GROQ_API_KEY"] = st.secrets["GROQ_API_KEY"]
+if "MAX_UPLOAD_MB" in st.secrets:
+    os.environ["MAX_UPLOAD_MB"] = str(st.secrets["MAX_UPLOAD_MB"])
 
 from extractor import SUPPORTED_EXTENSIONS, UnsupportedDocument, extract_text
 from rag import (
@@ -464,7 +473,7 @@ with upload_panel:
     service_label = (
         "<strong>Services connected</strong>"
         if google_ready and groq_ready
-        else "<strong>Add API keys in .env</strong>"
+        else "<strong>Add API keys in Streamlit Secrets / .env</strong>"
     )
     st.markdown(
         f'<div class="dm-powered">{service_icon} {service_label}<br>'
@@ -550,5 +559,3 @@ with chat_panel:
                         st.error(str(exc))
                     except Exception as exc:
                         st.error(f"The assistant could not answer: {exc}")
-
-            st.rerun()
